@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Foursite</title>
-<meta name="description" content="A market for things that haven't happened yet.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23090909'/%3E%3Cline x1='14' y1='14' x2='42' y2='42' stroke='%23E8E6E1' stroke-width='9' stroke-linecap='round'/%3E%3Cline x1='86' y1='14' x2='58' y2='42' stroke='%23E8E6E1' stroke-width='9' stroke-linecap='round'/%3E%3Cline x1='14' y1='86' x2='42' y2='58' stroke='%23E8E6E1' stroke-width='9' stroke-linecap='round'/%3E%3Cline x1='86' y1='86' x2='58' y2='58' stroke='%23E8E6E1' stroke-width='9' stroke-linecap='round'/%3E%3Ccircle cx='50' cy='50' r='7' fill='%23090909'/%3E%3Ccircle cx='50' cy='50' r='7' fill='none' stroke='%23E8E6E1' stroke-width='2'/%3E%3C/svg%3E">
+<title>foursite</title>
+<meta name="description" content="A position that stays yours until you stop answering.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23090909'/%3E%3Ccircle cx='50' cy='50' r='34' fill='none' stroke='%23E8E6E1' stroke-width='9' stroke-dasharray='145 60'/%3E%3Ccircle cx='50' cy='50' r='10' fill='%23E8E6E1'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
 
   header { display: flex; align-items: center; justify-content: space-between; padding: 34px 0; }
   .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-  .brand svg { width: 18px; height: 18px; opacity: 0.85; }
+  .brand svg { width: 17px; height: 17px; opacity: 0.85; }
   .brand span { font-weight: 500; font-size: 13px; letter-spacing: 0.14em; }
   nav { display: flex; gap: 28px; }
   nav button { background: none; border: none; font-family: var(--font); font-size: 12px; letter-spacing: 0.06em; color: var(--mute); cursor: pointer; padding: 2px 0; transition: color 0.2s ease; }
@@ -37,29 +37,38 @@
   .page.active { display: block; }
 
   .link { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--faint); padding-bottom: 1px; transition: border-color 0.2s ease; font-size: 13px; }
+  .link:hover { border-color: var(--ink); }
 
   .linkOut { color: var(--mute); text-decoration: none; font-size: 13px; display: inline-flex; align-items: center; gap: 6px; transition: color 0.2s ease; }
   .linkOut:hover { color: var(--ink); }
   .linkOut .arrow { color: var(--faint); font-size: 11px; transition: color 0.2s ease; }
   .linkOut:hover .arrow { color: var(--mute); }
-  .link:hover { border-color: var(--ink); }
 
   /* ---------------- hero ---------------- */
   .hero { padding: 60px 0 90px; }
+  .heroGrid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 40px; align-items: center; }
+  @media (max-width: 880px) { .heroGrid { grid-template-columns: 1fr; } }
+
+  .heroRight { display: flex; align-items: center; justify-content: center; }
+  .heroRight svg { width: 100%; max-width: 300px; height: auto; overflow: visible; }
+  @media (max-width: 880px) { .heroRight { margin-top: 48px; } .heroRight svg { max-width: 200px; } }
+
+  .orbit { transform-box: view-box; transform-origin: 100px 100px; animation: orbitSpin 7s linear infinite; }
+  @keyframes orbitSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  .centerDot { animation: centerPulse 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  @keyframes centerPulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.82); } }
   .hero .mark { margin-bottom: 34px; opacity: 0.8; }
-  .hero h1 {
-    font-size: 34px; font-weight: 300; line-height: 1.35; letter-spacing: -0.01em;
-    max-width: 15ch; color: var(--ink);
-  }
+  .hero h1 { font-size: 34px; font-weight: 300; line-height: 1.35; letter-spacing: -0.01em; max-width: 15ch; color: var(--ink); }
   @media (max-width: 640px) { .hero h1 { font-size: 25px; } }
   .hero p { margin-top: 26px; font-size: 14px; color: var(--mute); max-width: 52ch; line-height: 1.85; }
-  .heroActions { display: flex; gap: 30px; margin-top: 40px; }
+  .heroActions { display: flex; gap: 30px; margin-top: 40px; flex-wrap: wrap; }
 
   .glimpse { margin-top: 64px; padding-top: 34px; border-top: 1px solid var(--line); }
-  .glimpse .q { font-size: 14px; color: var(--ink); max-width: 48ch; }
-  .glimpseRow { display: flex; align-items: baseline; gap: 22px; margin-top: 18px; font-size: 13px; }
-  .glimpseRow .side { color: var(--mute); }
+  .glimpse .q { font-size: 13px; color: var(--mute); letter-spacing: 0.02em; }
+  .glimpseRow { display: flex; align-items: baseline; gap: 22px; margin-top: 16px; font-size: 13px; }
   .glimpseRow .num { color: var(--ink); font-weight: 500; letter-spacing: 0.02em; }
+  .glimpseRow .side { color: var(--mute); }
   .glimpseBar { position: relative; height: 1px; background: var(--faint); margin-top: 18px; }
   .glimpseBar .fill { position: absolute; top: -0.5px; left: 0; height: 2px; background: var(--ink); transition: width 1.4s cubic-bezier(0.2,0.8,0.3,1); }
   .glimpseFoot { display: flex; justify-content: space-between; margin-top: 14px; font-size: 11px; color: var(--faint); letter-spacing: 0.04em; }
@@ -95,9 +104,9 @@
   .contractRow .name { color: var(--ink); }
   .contractRow .role { color: var(--faint); text-align: right; }
 
-  .caLine { display: flex; align-items: baseline; gap: 14px; font-size: 12.5px; }
+  .caLine { display: flex; align-items: baseline; gap: 14px; font-size: 12.5px; flex-wrap: wrap; }
   .caLine .l { color: var(--faint); }
-  .caLine a { color: var(--mute); text-decoration: none; border-bottom: 1px solid var(--faint); }
+  .caLine a { color: var(--mute); text-decoration: none; border-bottom: 1px solid var(--faint); word-break: break-all; }
   .caLine a:hover { color: var(--ink); border-color: var(--ink); }
 
   footer { border-top: 1px solid var(--line); padding: 30px 0; color: var(--faint); font-size: 11.5px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; letter-spacing: 0.02em; }
@@ -112,7 +121,7 @@
 <div class="wrap">
   <header>
     <a class="brand" href="#top">
-      <svg viewBox="0 0 100 100"><line x1="14" y1="14" x2="42" y2="42" stroke="#E8E6E1" stroke-width="9" stroke-linecap="round"/><line x1="86" y1="14" x2="58" y2="42" stroke="#E8E6E1" stroke-width="9" stroke-linecap="round"/><line x1="14" y1="86" x2="42" y2="58" stroke="#E8E6E1" stroke-width="9" stroke-linecap="round"/><line x1="86" y1="86" x2="58" y2="58" stroke="#E8E6E1" stroke-width="9" stroke-linecap="round"/><circle cx="50" cy="50" r="7" fill="#090909" stroke="#E8E6E1" stroke-width="2"/></svg>
+      <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="34" fill="none" stroke="#E8E6E1" stroke-width="9" stroke-dasharray="145 60"/><circle cx="50" cy="50" r="10" fill="#E8E6E1"/></svg>
       <span>FOURSITE</span>
     </a>
     <nav>
@@ -124,41 +133,59 @@
   <!-- ============ OVERVIEW ============ -->
   <div class="page active" id="page-overview">
     <section class="hero" style="border-top:none;" id="top">
-      <div class="mark">
-        <svg width="26" height="26" viewBox="0 0 100 100"><line x1="14" y1="14" x2="42" y2="42" stroke="#6E6E6E" stroke-width="6" stroke-linecap="round"/><line x1="86" y1="14" x2="58" y2="42" stroke="#6E6E6E" stroke-width="6" stroke-linecap="round"/><line x1="14" y1="86" x2="42" y2="58" stroke="#6E6E6E" stroke-width="6" stroke-linecap="round"/><line x1="86" y1="86" x2="58" y2="58" stroke="#6E6E6E" stroke-width="6" stroke-linecap="round"/><circle cx="50" cy="50" r="6" fill="#E8E6E1"/></svg>
-      </div>
-      <h1>A market for things that haven't happened yet.</h1>
-      <p>Every question here is a pool. What people are willing to pay for one side over the
-      other is the only forecast worth reading. Nobody has to be right until the date arrives.</p>
-      <div class="heroActions">
-        <button class="link" data-goto="docs" style="background:none; border:none; cursor:pointer; font-family:var(--font);">Read the mechanism</button>
-        <a class="linkOut" href="#" id="ponsLink">pons.family <span class="arrow">&#8599;</span></a>
-      </div>
+      <div class="heroGrid">
+        <div>
+          <div class="mark">
+            <svg width="26" height="26" viewBox="0 0 100 100"><circle cx="50" cy="50" r="34" fill="none" stroke="#6E6E6E" stroke-width="6" stroke-dasharray="145 60"/><circle cx="50" cy="50" r="8" fill="#E8E6E1"/></svg>
+          </div>
+          <h1>It stays yours until you stop answering.</h1>
+          <p>Foursite locks FOURS to your presence. Every check-in resets the clock. Miss enough
+          of them and the hook lets it go to whoever you named, without asking twice.</p>
+          <div class="heroActions">
+            <button class="link" data-goto="docs" style="background:none; border:none; cursor:pointer; font-family:var(--font);">Read the mechanism</button>
+            <a class="linkOut" href="https://www.ponsfamily.com/launchpad/0xBe6aC9b4281411d90f8a22745450103D7E64CFB0" id="ponsLink">pons.family <span class="arrow">&#8599;</span></a>
+          </div>
 
-      <div class="glimpse">
-        <div class="q">Will the Fed cut rates at its March meeting.</div>
-        <div class="glimpseRow"><span class="side">for</span> <span class="num" id="glimpseYes">67</span><span class="side">against</span> <span class="num" id="glimpseNo">33</span></div>
-        <div class="glimpseBar"><div class="fill" id="glimpseFill" style="width:0%;"></div></div>
-        <div class="glimpseFoot"><span>$482K WAGERED</span><span>CLOSES MAR 19</span></div>
+          <div class="glimpse">
+            <div class="q">vault 0x91B4&hellip;e4F2</div>
+            <div class="glimpseRow"><span class="side">last seen</span> <span class="num">44 days ago</span> <span class="side">threshold</span> <span class="num">90 days</span></div>
+            <div class="glimpseBar"><div class="fill" id="glimpseFill" style="width:0%;"></div></div>
+            <div class="glimpseFoot"><span>212K FOURS HELD</span><span>SILENT SINCE JUL 21</span></div>
+          </div>
+        </div>
+
+        <div class="heroRight" aria-hidden="true">
+          <svg viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="76" fill="none" stroke="#242424" stroke-width="1"/>
+            <circle class="ringArc" cx="100" cy="100" r="76" fill="none" stroke="#3A3A3A" stroke-width="1.4" stroke-dasharray="330 148"/>
+            <g class="orbit">
+              <circle cx="176" cy="100" r="3.5" fill="#6E6E6E"/>
+            </g>
+            <circle class="centerDot" cx="100" cy="100" r="6" fill="#E8E6E1"/>
+          </svg>
+        </div>
       </div>
     </section>
 
     <section id="how">
       <div class="sectionHead">
-        <h2>What happens between now and the answer</h2>
+        <h2>What happens between locking it and losing it</h2>
       </div>
       <div class="stagesList">
         <div class="stageRow">
           <div class="num">I</div>
-          <div><h3>A question is asked</h3><p>Two sides open at even odds. Nothing is known yet, so nothing is priced in.</p></div>
+          <div><h3>You lock it</h3><p>Deposit into a vault, name who it goes to, and choose how long your silence
+          has to last before that matters.</p></div>
         </div>
         <div class="stageRow">
           <div class="num">II</div>
-          <div><h3>Belief has a price</h3><p>Every wager moves it. What a share costs is what the market currently thinks the odds are, nothing more.</p></div>
+          <div><h3>You check in</h3><p>A short call, however often you like. Each one resets the clock to zero.
+          Nothing else about the vault changes.</p></div>
         </div>
         <div class="stageRow">
           <div class="num">III</div>
-          <div><h3>The date arrives</h3><p>A reporter confirms what happened. One side is paid a dollar. The other is paid nothing.</p></div>
+          <div><h3>You go quiet</h3><p>Past the threshold, the hook stops recognizing you as the owner. The
+          position moves to whoever you named, on the next swap that touches it.</p></div>
         </div>
       </div>
     </section>
@@ -170,8 +197,8 @@
       <div class="docsGrid">
         <nav class="docsNav">
           <a href="#d-overview">Overview</a>
-          <a href="#d-shares">Pricing</a>
-          <a href="#d-resolution">Resolution</a>
+          <a href="#d-checkin">Checking in</a>
+          <a href="#d-silence">Going quiet</a>
           <a href="#d-contracts">Contracts</a>
           <a href="#d-risks">Risks</a>
           <a href="#d-network">Network</a>
@@ -179,44 +206,46 @@
         <div>
           <div class="docBlock" id="d-overview">
             <h3>Overview</h3>
-            <p>Each question is a Uniswap v4 pool holding two shares that are worth exactly one
-            dollar between them. Which one holds all of it isn't decided until the question
-            closes.</p>
+            <p>A vault is a Uniswap v4 position holding FOURS, with an owner, a successor, and a
+            length of silence it can tolerate. Nothing about how the position trades changes. What
+            changes is who the hook will let touch it, and that depends entirely on when you were
+            last heard from.</p>
           </div>
-          <div class="docBlock" id="d-shares">
-            <h3>Pricing</h3>
-            <p>A share worth 67 cents is the market saying: roughly two in three, as far as anyone
-            here is willing to bet. Buy it and that number moves. It was never a claim of fact,
-            only of appetite.</p>
+          <div class="docBlock" id="d-checkin">
+            <h3>Checking in</h3>
+            <p>A check-in is one small on-chain call. It doesn't move funds or announce anything.
+            It just updates a timestamp the hook reads before letting any swap through. As long as
+            that timestamp stays recent, nothing about the vault is unusual at all.</p>
           </div>
-          <div class="docBlock" id="d-resolution">
-            <h3>Resolution</h3>
-            <p>A named reporter posts what actually happened. <code>FoursiteHook</code> reads that
-            report, freezes the pool, and lets each side redeem at the value it was owed all
-            along: one dollar, or nothing.</p>
-            <p>If the reporter never posts, or the outcome can't be pinned down, both sides settle
-            evenly instead of guessing on your behalf.</p>
+          <div class="docBlock" id="d-silence">
+            <h3>Going quiet</h3>
+            <p>Every swap against the vault runs through <code>FoursiteHook</code>, which checks how
+            long it's been since the last check-in. Inside the threshold, it behaves like any
+            ordinary pool. Past it, ownership quietly reassigns to the named successor, and the
+            next swap settles under their terms instead.</p>
+            <p>There's no announcement when this happens. The chain doesn't send a notice. It's
+            just true, the next time anyone looks.</p>
           </div>
           <div class="docBlock" id="d-contracts">
             <h3>Contracts</h3>
             <p>Four pieces. Two you'd touch, two you wouldn't.</p>
             <div class="contractsList">
-              <div class="contractRow"><span class="name">FoursiteFactory</span><span class="role">opens new questions</span></div>
-              <div class="contractRow"><span class="name">FoursiteMarket</span><span class="role">the pool itself</span></div>
-              <div class="contractRow"><span class="name">FoursiteHook</span><span class="role">freezes and pays out</span></div>
-              <div class="contractRow"><span class="name">FoursiteResolver</span><span class="role">says what happened</span></div>
+              <div class="contractRow"><span class="name">FoursiteFactory</span><span class="role">opens new vaults</span></div>
+              <div class="contractRow"><span class="name">FoursiteVault</span><span class="role">holds the position</span></div>
+              <div class="contractRow"><span class="name">FoursiteHook</span><span class="role">checks silence, reassigns</span></div>
+              <div class="contractRow"><span class="name">FoursiteBeacon</span><span class="role">records check-ins</span></div>
             </div>
           </div>
           <div class="docBlock" id="d-risks">
             <h3>Risks</h3>
-            <p>None of this is live. A reporter who's late, wrong, or absent leaves a market
-            unresolved indefinitely. Read the source before you'd ever put anything real behind
-            it.</p>
+            <p>None of this is live. A threshold set too short can hand a position to a successor
+            while its owner is still very much around. One set too long defeats the purpose
+            entirely. Read the source before you'd trust it with a timeline that matters.</p>
           </div>
           <div class="docBlock" id="d-network">
             <h3>Network</h3>
             <p>Foursite would run on Robinhood, chain <code>4663</code>.</p>
-            <div class="caLine"><span class="l">contract</span><a href="#">not yet deployed</a></div>
+            <div class="caLine"><span class="l">contract</span><a href="https://www.ponsfamily.com/launchpad/0xBe6aC9b4281411d90f8a22745450103D7E64CFB0">0xBe6aC9b4281411d90f8a22745450103D7E64CFB0</a></div>
           </div>
         </div>
       </div>
@@ -224,15 +253,14 @@
   </div>
 
   <footer>
-    <span>Foursite</span>
+    <span>foursite</span>
     <span><a href="#top">back to top</a></span>
   </footer>
 </div>
 
 <script>
-  // hero glimpse bar draws in once on load
   requestAnimationFrame(() => {
-    setTimeout(() => { document.getElementById("glimpseFill").style.width = "67%"; }, 200);
+    setTimeout(() => { document.getElementById("glimpseFill").style.width = "49%"; }, 200);
   });
 
   function showPage(name) {
