@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Foursite</title>
+<meta name="description" content="A market for things that haven't happened yet.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23090909'/%3E%3Cline x1='14' y1='14' x2='42' y2='42' stroke='%23E8E6E1' stroke-width='9' stroke-linecap='round'/%3E%3Cline x1='86' y1='14' x2='58' y2='42' stroke='%23E8E6E1' stroke-width='9' stroke-linecap='round'/%3E%3Cline x1='14' y1='86' x2='42' y2='58' stroke='%23E8E6E1' stroke-width='9' stroke-linecap='round'/%3E%3Cline x1='86' y1='86' x2='58' y2='58' stroke='%23E8E6E1' stroke-width='9' stroke-linecap='round'/%3E%3Ccircle cx='50' cy='50' r='7' fill='%23090909'/%3E%3Ccircle cx='50' cy='50' r='7' fill='none' stroke='%23E8E6E1' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #090909;
+    --ink: #E8E6E1;
+    --mute: #6E6E6E;
+    --faint: #3A3A3A;
+    --line: #1D1D1D;
+    --font: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 14px; font-weight: 300; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 1px solid var(--mute); outline-offset: 3px; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 26px; }
+
+  header { display: flex; align-items: center; justify-content: space-between; padding: 34px 0; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand svg { width: 18px; height: 18px; opacity: 0.85; }
+  .brand span { font-weight: 500; font-size: 13px; letter-spacing: 0.14em; }
+  nav { display: flex; gap: 28px; }
+  nav button { background: none; border: none; font-family: var(--font); font-size: 12px; letter-spacing: 0.06em; color: var(--mute); cursor: pointer; padding: 2px 0; transition: color 0.2s ease; }
+  nav button.active, nav button:hover { color: var(--ink); }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  .link { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--faint); padding-bottom: 1px; transition: border-color 0.2s ease; font-size: 13px; }
+
+  .linkOut { color: var(--mute); text-decoration: none; font-size: 13px; display: inline-flex; align-items: center; gap: 6px; transition: color 0.2s ease; }
+  .linkOut:hover { color: var(--ink); }
+  .linkOut .arrow { color: var(--faint); font-size: 11px; transition: color 0.2s ease; }
+  .linkOut:hover .arrow { color: var(--mute); }
+  .link:hover { border-color: var(--ink); }
+
+  /* ---------------- hero ---------------- */
+  .hero { padding: 60px 0 90px; }
+  .hero .mark { margin-bottom: 34px; opacity: 0.8; }
+  .hero h1 {
+    font-size: 34px; font-weight: 300; line-height: 1.35; letter-spacing: -0.01em;
+    max-width: 15ch; color: var(--ink);
+  }
+  @media (max-width: 640px) { .hero h1 { font-size: 25px; } }
+  .hero p { margin-top: 26px; font-size: 14px; color: var(--mute); max-width: 52ch; line-height: 1.85; }
+  .heroActions { display: flex; gap: 30px; margin-top: 40px; }
+
+  .glimpse { margin-top: 64px; padding-top: 34px; border-top: 1px solid var(--line); }
+  .glimpse .q { font-size: 14px; color: var(--ink); max-width: 48ch; }
+  .glimpseRow { display: flex; align-items: baseline; gap: 22px; margin-top: 18px; font-size: 13px; }
+  .glimpseRow .side { color: var(--mute); }
+  .glimpseRow .num { color: var(--ink); font-weight: 500; letter-spacing: 0.02em; }
+  .glimpseBar { position: relative; height: 1px; background: var(--faint); margin-top: 18px; }
+  .glimpseBar .fill { position: absolute; top: -0.5px; left: 0; height: 2px; background: var(--ink); transition: width 1.4s cubic-bezier(0.2,0.8,0.3,1); }
+  .glimpseFoot { display: flex; justify-content: space-between; margin-top: 14px; font-size: 11px; color: var(--faint); letter-spacing: 0.04em; }
+
+  /* ---------------- sections ---------------- */
+  section { padding: 80px 0; border-top: 1px solid var(--line); }
+  .sectionHead { max-width: 52ch; margin-bottom: 48px; }
+  .sectionHead h2 { font-size: 17px; font-weight: 500; letter-spacing: 0.02em; }
+  .sectionHead p { margin-top: 14px; color: var(--mute); font-size: 13.5px; line-height: 1.8; }
+
+  .stagesList { display: flex; flex-direction: column; }
+  .stageRow { display: grid; grid-template-columns: 50px 1fr; gap: 26px; padding: 26px 0; border-top: 1px solid var(--line); }
+  .stageRow:last-child { border-bottom: 1px solid var(--line); }
+  .stageRow .num { color: var(--faint); font-size: 13px; padding-top: 2px; }
+  .stageRow h3 { font-size: 14.5px; font-weight: 500; margin-bottom: 8px; }
+  .stageRow p { font-size: 13px; color: var(--mute); line-height: 1.8; max-width: 54ch; }
+
+  /* docs */
+  .docsGrid { display: grid; grid-template-columns: 160px 1fr; gap: 44px; }
+  @media (max-width: 780px) { .docsGrid { grid-template-columns: 1fr; } }
+  .docsNav { position: sticky; top: 30px; display: flex; flex-direction: column; gap: 4px; height: fit-content; }
+  .docsNav a { font-size: 12px; color: var(--faint); text-decoration: none; padding: 5px 0; letter-spacing: 0.02em; }
+  .docsNav a:hover { color: var(--ink); }
+  .docBlock { max-width: 58ch; padding-bottom: 46px; }
+  .docBlock:last-child { padding-bottom: 0; }
+  .docBlock h3 { font-size: 15px; font-weight: 500; margin-bottom: 12px; letter-spacing: 0.01em; }
+  .docBlock p { color: var(--mute); font-size: 13px; line-height: 1.85; margin-bottom: 12px; }
+  .docBlock code { color: var(--ink); font-size: 0.94em; }
+
+  .contractsList { margin: 10px 0 18px; }
+  .contractRow { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 12.5px; }
+  .contractRow:last-child { border-bottom: 1px solid var(--line); }
+  .contractRow .name { color: var(--ink); }
+  .contractRow .role { color: var(--faint); text-align: right; }
+
+  .caLine { display: flex; align-items: baseline; gap: 14px; font-size: 12.5px; }
+  .caLine .l { color: var(--faint); }
+  .caLine a { color: var(--mute); text-decoration: none; border-bottom: 1px solid var(--faint); }
+  .caLine a:hover { color: var(--ink); border-color: var(--ink); }
+
+  footer { border-top: 1px solid var(--line); padding: 30px 0; color: var(--faint); font-size: 11.5px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; letter-spacing: 0.02em; }
+  footer a { color: var(--faint); text-decoration: none; }
+  footer a:hover { color: var(--ink); }
+
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 100 100"><line x1="14" y1="14" x2="42" y2="42" stroke="#E8E6E1" stroke-width="9" stroke-linecap="round"/><line x1="86" y1="14" x2="58" y2="42" stroke="#E8E6E1" stroke-width="9" stroke-linecap="round"/><line x1="14" y1="86" x2="42" y2="58" stroke="#E8E6E1" stroke-width="9" stroke-linecap="round"/><line x1="86" y1="86" x2="58" y2="58" stroke="#E8E6E1" stroke-width="9" stroke-linecap="round"/><circle cx="50" cy="50" r="7" fill="#090909" stroke="#E8E6E1" stroke-width="2"/></svg>
+      <span>FOURSITE</span>
+    </a>
+    <nav>
+      <button type="button" data-page="overview" class="active">Overview</button>
+      <button type="button" data-page="docs">Docs</button>
+    </nav>
+  </header>
+
+  <!-- ============ OVERVIEW ============ -->
+  <div class="page active" id="page-overview">
+    <section class="hero" style="border-top:none;" id="top">
+      <div class="mark">
+        <svg width="26" height="26" viewBox="0 0 100 100"><line x1="14" y1="14" x2="42" y2="42" stroke="#6E6E6E" stroke-width="6" stroke-linecap="round"/><line x1="86" y1="14" x2="58" y2="42" stroke="#6E6E6E" stroke-width="6" stroke-linecap="round"/><line x1="14" y1="86" x2="42" y2="58" stroke="#6E6E6E" stroke-width="6" stroke-linecap="round"/><line x1="86" y1="86" x2="58" y2="58" stroke="#6E6E6E" stroke-width="6" stroke-linecap="round"/><circle cx="50" cy="50" r="6" fill="#E8E6E1"/></svg>
+      </div>
+      <h1>A market for things that haven't happened yet.</h1>
+      <p>Every question here is a pool. What people are willing to pay for one side over the
+      other is the only forecast worth reading. Nobody has to be right until the date arrives.</p>
+      <div class="heroActions">
+        <button class="link" data-goto="docs" style="background:none; border:none; cursor:pointer; font-family:var(--font);">Read the mechanism</button>
+        <a class="linkOut" href="#" id="ponsLink">pons.family <span class="arrow">&#8599;</span></a>
+      </div>
+
+      <div class="glimpse">
+        <div class="q">Will the Fed cut rates at its March meeting.</div>
+        <div class="glimpseRow"><span class="side">for</span> <span class="num" id="glimpseYes">67</span><span class="side">against</span> <span class="num" id="glimpseNo">33</span></div>
+        <div class="glimpseBar"><div class="fill" id="glimpseFill" style="width:0%;"></div></div>
+        <div class="glimpseFoot"><span>$482K WAGERED</span><span>CLOSES MAR 19</span></div>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="sectionHead">
+        <h2>What happens between now and the answer</h2>
+      </div>
+      <div class="stagesList">
+        <div class="stageRow">
+          <div class="num">I</div>
+          <div><h3>A question is asked</h3><p>Two sides open at even odds. Nothing is known yet, so nothing is priced in.</p></div>
+        </div>
+        <div class="stageRow">
+          <div class="num">II</div>
+          <div><h3>Belief has a price</h3><p>Every wager moves it. What a share costs is what the market currently thinks the odds are, nothing more.</p></div>
+        </div>
+        <div class="stageRow">
+          <div class="num">III</div>
+          <div><h3>The date arrives</h3><p>A reporter confirms what happened. One side is paid a dollar. The other is paid nothing.</p></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ DOCS ============ -->
+  <div class="page" id="page-docs">
+    <section style="border-top:none;">
+      <div class="docsGrid">
+        <nav class="docsNav">
+          <a href="#d-overview">Overview</a>
+          <a href="#d-shares">Pricing</a>
+          <a href="#d-resolution">Resolution</a>
+          <a href="#d-contracts">Contracts</a>
+          <a href="#d-risks">Risks</a>
+          <a href="#d-network">Network</a>
+        </nav>
+        <div>
+          <div class="docBlock" id="d-overview">
+            <h3>Overview</h3>
+            <p>Each question is a Uniswap v4 pool holding two shares that are worth exactly one
+            dollar between them. Which one holds all of it isn't decided until the question
+            closes.</p>
+          </div>
+          <div class="docBlock" id="d-shares">
+            <h3>Pricing</h3>
+            <p>A share worth 67 cents is the market saying: roughly two in three, as far as anyone
+            here is willing to bet. Buy it and that number moves. It was never a claim of fact,
+            only of appetite.</p>
+          </div>
+          <div class="docBlock" id="d-resolution">
+            <h3>Resolution</h3>
+            <p>A named reporter posts what actually happened. <code>FoursiteHook</code> reads that
+            report, freezes the pool, and lets each side redeem at the value it was owed all
+            along: one dollar, or nothing.</p>
+            <p>If the reporter never posts, or the outcome can't be pinned down, both sides settle
+            evenly instead of guessing on your behalf.</p>
+          </div>
+          <div class="docBlock" id="d-contracts">
+            <h3>Contracts</h3>
+            <p>Four pieces. Two you'd touch, two you wouldn't.</p>
+            <div class="contractsList">
+              <div class="contractRow"><span class="name">FoursiteFactory</span><span class="role">opens new questions</span></div>
+              <div class="contractRow"><span class="name">FoursiteMarket</span><span class="role">the pool itself</span></div>
+              <div class="contractRow"><span class="name">FoursiteHook</span><span class="role">freezes and pays out</span></div>
+              <div class="contractRow"><span class="name">FoursiteResolver</span><span class="role">says what happened</span></div>
+            </div>
+          </div>
+          <div class="docBlock" id="d-risks">
+            <h3>Risks</h3>
+            <p>None of this is live. A reporter who's late, wrong, or absent leaves a market
+            unresolved indefinitely. Read the source before you'd ever put anything real behind
+            it.</p>
+          </div>
+          <div class="docBlock" id="d-network">
+            <h3>Network</h3>
+            <p>Foursite would run on Robinhood, chain <code>4663</code>.</p>
+            <div class="caLine"><span class="l">contract</span><a href="#">not yet deployed</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <span>Foursite</span>
+    <span><a href="#top">back to top</a></span>
+  </footer>
+</div>
+
+<script>
+  // hero glimpse bar draws in once on load
+  requestAnimationFrame(() => {
+    setTimeout(() => { document.getElementById("glimpseFill").style.width = "67%"; }, 200);
+  });
+
+  function showPage(name) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById("page-" + name).classList.add("active");
+    document.querySelectorAll("nav button").forEach(b => b.classList.toggle("active", b.dataset.page === name));
+    window.scrollTo(0, 0);
+  }
+  document.querySelectorAll("nav button").forEach(btn => btn.addEventListener("click", () => showPage(btn.dataset.page)));
+  document.querySelectorAll("[data-goto]").forEach(btn => btn.addEventListener("click", () => showPage(btn.dataset.goto)));
+</script>
+
+</body>
+</html>
